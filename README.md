@@ -1,1 +1,1 @@
-# Next-prisma
+# Next-mongo
