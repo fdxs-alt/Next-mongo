@@ -1,5 +1,5 @@
 {
-  "name": "next-prisma",
+  "name": "next-books",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -13,7 +13,6 @@
     "next": "10.0.3",
     "next-auth": "^3.1.0",
     "next-connect": "^0.9.1",
-    "pg": "^8.5.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "reflect-metadata": "^0.1.13",
