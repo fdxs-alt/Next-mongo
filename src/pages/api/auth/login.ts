@@ -1,6 +1,5 @@
-import { ErrorWithCode } from "./../../../middleware/error";
-import middleware from "../../../middleware";
-import { getUserByNick } from "../../../db/user";
+import { getUserByNick, createJwtToken } from "@db";
+import middleware, { ErrorWithCode } from "@middleware";
 import { compare } from "bcrypt";
 
 const handler = middleware.post(async (req, res, next) => {
@@ -25,7 +24,9 @@ const handler = middleware.post(async (req, res, next) => {
 
   const { password: userPasssword, ...rest } = user;
 
-  return res.json({ ...rest });
+  const token = createJwtToken(rest._id as string);
+
+  return res.json({ ...rest, token });
 });
 
 export default handler;

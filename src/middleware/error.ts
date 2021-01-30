@@ -1,4 +1,4 @@
-import { IRequest } from "./index";
+import { IRequest } from "@middleware";
 import { NextApiResponse } from "next";
 import { ErrorHandler } from "next-connect";
 

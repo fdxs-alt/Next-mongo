@@ -1,6 +1,5 @@
-import { ErrorWithCode } from "./../../../middleware/error";
-import middleware from "../../../middleware";
-import { createUser, getUserByEmailOrNick } from "../../../db/";
+import middleware, { ErrorWithCode } from "@middleware";
+import { createUser, getUserByEmailOrNick } from "@db";
 
 const handler = middleware.post(async (req, res, next) => {
   const { nick, password, email } = req.body;

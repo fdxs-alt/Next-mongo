@@ -2,9 +2,32 @@ import {
   createUser,
   getUserById,
   removeUser,
-  getUserByEmailOrNick,
   getUserByNick,
+  getUserByEmailOrNick,
+  decodeJwtToken,
+  createJwtToken,
+  User,
 } from "./user";
+import { createCheckout, prolongCheckout, removeCheckout } from "./checkout";
+import {
+  addBookToAuthor,
+  createAuthor,
+  deleteAuthor,
+  getAuthorById,
+  getAuthors,
+  removeBookFromAuthor,
+  updateAuthorData,
+} from "./author";
+import {
+  createBook,
+  deleteBook,
+  getBookById,
+  getBooksByAuthorId,
+  getRecentBooks,
+  getSearchedBooks,
+  updateBook,
+  updateBorrowedCount,
+} from "./book";
 import { connectToDatabase } from "./conntect";
 
 export {
@@ -14,4 +37,25 @@ export {
   connectToDatabase,
   getUserByEmailOrNick,
   getUserByNick,
+  createCheckout,
+  prolongCheckout,
+  removeCheckout,
+  addBookToAuthor,
+  createAuthor,
+  deleteAuthor,
+  getAuthorById,
+  getAuthors,
+  removeBookFromAuthor,
+  updateAuthorData,
+  createBook,
+  deleteBook,
+  getBookById,
+  getBooksByAuthorId,
+  getRecentBooks,
+  getSearchedBooks,
+  updateBook,
+  updateBorrowedCount,
+  decodeJwtToken,
+  createJwtToken,
 };
+export type { User };
