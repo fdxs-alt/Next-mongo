@@ -1,4 +1,5 @@
-import { decodeJwtToken, getUserById } from "@db";
+import { ACCESS_TYPE } from "@utils";
+import { decodeJwtToken, JwtData } from "@db";
 import { IRequest } from "@middleware";
 const authMiddleware = async (req: IRequest, res, next) => {
   const authorization = req.headers.authorization;
@@ -8,12 +9,11 @@ const authMiddleware = async (req: IRequest, res, next) => {
   }
 
   try {
-    const token = authorization.split(" ");
-    const decodedToken = await decodeJwtToken(token[1]);
+    const token = authorization.split(" ")[1];
+    const decodedToken = (await decodeJwtToken(token, ACCESS_TYPE)) as JwtData;
     if (decodedToken) {
-      const user = await getUserById(req.db, decodedToken.id);
-
-      req.user = user;
+      const { exp: _, iat: __, ...rest } = decodedToken;
+      req.user = rest;
     }
   } catch (error) {}
 

@@ -7,6 +7,8 @@ import {
   decodeJwtToken,
   createJwtToken,
   User,
+  JwtData,
+  JwtPayload,
 } from "./user";
 import { createCheckout, prolongCheckout, removeCheckout } from "./checkout";
 import {
@@ -58,4 +60,4 @@ export {
   decodeJwtToken,
   createJwtToken,
 };
-export type { User };
+export type { User, JwtData, JwtPayload };

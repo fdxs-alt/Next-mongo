@@ -1,5 +1,7 @@
-import { getUserByNick, createJwtToken } from "@db";
+import { WithId } from "mongodb";
+import { getUserByNick, createJwtToken, User } from "@db";
 import middleware, { ErrorWithCode } from "@middleware";
+import { ACCESS_TYPE, REFRESH_TYPE, sendRefreshCookie } from "@utils";
 import { compare } from "bcrypt";
 
 const handler = middleware.post(async (req, res, next) => {
@@ -22,11 +24,16 @@ const handler = middleware.post(async (req, res, next) => {
     next(new ErrorWithCode({ message: "User unauthorized", code: 401 }));
   }
 
-  const { password: userPasssword, ...rest } = user;
+  const { password: userPasssword, ...rest } = user as WithId<User>;
 
-  const token = createJwtToken(rest._id as string);
+  const refreshToken = createJwtToken(rest, REFRESH_TYPE);
 
-  return res.json({ ...rest, token });
+  sendRefreshCookie(res, refreshToken);
+
+  return res.json({
+    ...rest,
+    accessToken: createJwtToken(rest, ACCESS_TYPE),
+  });
 });
 
 export default handler;

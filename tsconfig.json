@@ -16,7 +16,9 @@
     "baseUrl": "src",
     "paths": {
       "@db": ["db"],
-      "@middleware": ["middleware"]
+      "@middleware": ["middleware"],
+      "@utils": ["utils"],
+      "@ctx": ["ctx"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

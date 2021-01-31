@@ -1,0 +1,5 @@
+const REFRESH_TYPE = "REFRESH";
+const ACCESS_TYPE = "ACCESS";
+const COOKIE_NAME = "jrc";
+
+export { REFRESH_TYPE, ACCESS_TYPE, COOKIE_NAME };
