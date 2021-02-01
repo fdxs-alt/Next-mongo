@@ -7,7 +7,7 @@ export interface User {
     role: "ADMIN" | "USER"
 }
 interface Props {
-    initalUser: User;
+    initalUser?: User;
     children: React.ReactNode
 }
 
