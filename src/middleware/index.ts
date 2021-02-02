@@ -12,8 +12,8 @@ export interface IRequest extends NextApiRequest {
 
 const middleware = nc<IRequest, NextApiResponse>({ onError: errorHandler });
 
-middleware.use(database, authMiddleware);
+middleware.use(database);
 
 export default middleware;
 
-export { ErrorWithCode };
+export { ErrorWithCode, authMiddleware };

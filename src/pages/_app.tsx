@@ -1,7 +1,7 @@
 import App from "next/app";
 import type { AppProps, AppContext } from 'next/app'
 import { AuthContextProvider, User } from "@ctx";
-
+import { ChakraProvider } from '@chakra-ui/react'
 interface InitalAppProps extends AppProps {
   user?: User;
   accessToken?: string
@@ -9,7 +9,9 @@ interface InitalAppProps extends AppProps {
 function MyApp({ Component, pageProps, user }: InitalAppProps) {
   return (
     <AuthContextProvider initalUser={user}>
-      <Component {...pageProps} />
+      <ChakraProvider>
+        <Component {...pageProps} />
+      </ChakraProvider>
     </AuthContextProvider>
   );
 }

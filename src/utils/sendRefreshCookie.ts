@@ -9,3 +9,13 @@ export const sendRefreshCookie = (res: NextApiResponse, token: string) => {
     })
   );
 };
+
+export const destroyRefreshCookie = (res: NextApiResponse) => {
+  res.setHeader(
+    "Set-Cookie",
+    serialize("jrc", null, {
+      httpOnly: true,
+      maxAge: 0,
+    })
+  );
+};

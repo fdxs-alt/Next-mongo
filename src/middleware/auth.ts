@@ -1,6 +1,7 @@
 import { ACCESS_TYPE } from "@utils";
-import { decodeJwtToken, JwtData } from "@db";
+import { decodeJwtToken, getUserById, JwtData } from "@db";
 import { IRequest } from "@middleware";
+import { ObjectID } from "mongodb";
 const authMiddleware = async (req: IRequest, res, next) => {
   const authorization = req.headers.authorization;
 
@@ -10,9 +11,15 @@ const authMiddleware = async (req: IRequest, res, next) => {
 
   try {
     const token = authorization.split(" ")[1];
-    const decodedToken = (await decodeJwtToken(token, ACCESS_TYPE)) as JwtData;
+    const decodedToken = (await decodeJwtToken(token, ACCESS_TYPE)) as {
+      exp: number;
+      iat: number;
+      id: ObjectID;
+    };
+
     if (decodedToken) {
-      const { exp: _, iat: __, ...rest } = decodedToken;
+      const { id } = decodedToken;
+      const { password, ...rest } = await getUserById(req.db, id);
       req.user = rest;
     }
   } catch (error) {}

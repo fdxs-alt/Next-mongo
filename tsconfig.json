@@ -18,7 +18,8 @@
       "@db": ["db"],
       "@middleware": ["middleware"],
       "@utils": ["utils"],
-      "@ctx": ["ctx"]
+      "@ctx": ["ctx"],
+      "@components": ["components"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

@@ -89,7 +89,9 @@ const createJwtToken = (
         expiresIn: "7d",
       });
     case ACCESS_TYPE:
-      return sign({ ...payload }, process.env.SECRET_TWO, { expiresIn: "15m" });
+      return sign({ id: payload._id }, process.env.SECRET_TWO, {
+        expiresIn: "15m",
+      });
     default:
       throw new Error("Add the type");
   }

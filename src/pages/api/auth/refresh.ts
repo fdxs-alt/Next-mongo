@@ -1,5 +1,5 @@
 import { ObjectID } from "mongodb";
-import { JwtData, decodeJwtToken, getUserById, createJwtToken } from "@db";
+import { decodeJwtToken, getUserById, createJwtToken } from "@db";
 import { sendRefreshCookie, REFRESH_TYPE, ACCESS_TYPE } from "@utils";
 import nc from "@middleware";
 
