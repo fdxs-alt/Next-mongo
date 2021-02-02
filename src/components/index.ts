@@ -1,3 +1,3 @@
 import Layout from "./Layout";
-
-export { Layout };
+import LoginForm from "./LoginForm";
+export { Layout, LoginForm };

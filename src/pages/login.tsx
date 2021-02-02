@@ -1,9 +1,12 @@
-import { Layout } from "@components"
+import { LoginForm } from "@components"
+import React from "react"
 
 interface Props { }
 
 const Login: React.FC<Props> = (): JSX.Element => {
-    return <Layout title="Login">Login</Layout>
+    return (
+        <LoginForm title="Login" isAdmin={false} heading="Login" />
+    )
 }
 
 export default Login

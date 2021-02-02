@@ -1,8 +1,7 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-import { Box, Button, Flex, Heading, Text, } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Text, Img } from "@chakra-ui/react";
 import { Layout } from "@components";
 import { useRouter } from "next/dist/client/router";
-import Image from 'next/image'
 
 const Home: React.FC = () => {
   const router = useRouter();
@@ -25,7 +24,7 @@ const Home: React.FC = () => {
               Register now
               </Button>
           </Flex>
-          <Image
+          <Img
             src="/main.png"
             width={600}
             height={300}
