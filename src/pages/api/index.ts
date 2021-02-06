@@ -1,5 +1,5 @@
-import { NextApiResponse } from "next";
-import { NextApiRequest } from "next";
+import { NextApiResponse } from 'next'
+import { NextApiRequest } from 'next'
 export default function (req: NextApiRequest, res: NextApiResponse) {
-  res.json({ message: "message" });
+  res.json({ message: 'message' })
 }

@@ -1,29 +1,44 @@
-import middleware, { ErrorWithCode } from "@middleware";
-import { createUser, getUserByEmailOrNick } from "@db";
+import middleware, { ErrorWithCode } from '@middleware'
+import {
+  createJwtToken,
+  createUser,
+  getUserByEmailOrNick,
+  JwtPayload,
+} from '@db'
+import { ACCESS_TYPE, REFRESH_TYPE, sendRefreshCookie } from '@utils'
 
 const handler = middleware.post(async (req, res, next) => {
-  const { nick, password, email } = req.body;
+  const { nick, password, email } = req.body
 
-  const { db } = req;
+  const { db } = req
 
   if (!nick || !password || !email) {
-    next(new ErrorWithCode({ message: "Fill up all fields", code: 400 }));
+    return next(new ErrorWithCode({ message: 'Fill up all fields', code: 400 }))
   }
 
-  const users = await getUserByEmailOrNick(db, nick, email);
+  const users = await getUserByEmailOrNick(db, nick, email)
 
-  if (users.length) {
-    next(
+  if (users.length > 0) {
+    return next(
       new ErrorWithCode({
-        message: "User which such credentials already exists",
+        message: 'User with such credentials already exists',
         code: 400,
       })
-    );
+    )
   }
 
-  const { insertedId } = await createUser(db, { email, password, nick });
+  const { insertedId } = await createUser(db, { email, password, nick })
 
-  return res.json({ email, nick, _id: insertedId });
-});
+  const newUser = { email, _id: insertedId, nick, role: 'USER' } as JwtPayload
 
-export default handler;
+  const refreshToken = createJwtToken(newUser, REFRESH_TYPE)
+
+  sendRefreshCookie(res, refreshToken)
+
+  return res.json({
+    ...newUser,
+    accessToken: createJwtToken(newUser, ACCESS_TYPE),
+  })
+})
+
+export default handler

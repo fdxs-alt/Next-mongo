@@ -9,8 +9,8 @@ import {
   User,
   JwtData,
   JwtPayload,
-} from "./user";
-import { createCheckout, prolongCheckout, removeCheckout } from "./checkout";
+} from './user'
+import { createCheckout, prolongCheckout, removeCheckout } from './checkout'
 import {
   addBookToAuthor,
   createAuthor,
@@ -19,7 +19,7 @@ import {
   getAuthors,
   removeBookFromAuthor,
   updateAuthorData,
-} from "./author";
+} from './author'
 import {
   createBook,
   deleteBook,
@@ -29,8 +29,8 @@ import {
   getSearchedBooks,
   updateBook,
   updateBorrowedCount,
-} from "./book";
-import { connectToDatabase } from "./conntect";
+} from './book'
+import { connectToDatabase } from './conntect'
 
 export {
   createUser,
@@ -59,5 +59,5 @@ export {
   updateBorrowedCount,
   decodeJwtToken,
   createJwtToken,
-};
-export type { User, JwtData, JwtPayload };
+}
+export type { User, JwtData, JwtPayload }

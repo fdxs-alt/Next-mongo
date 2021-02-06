@@ -1,5 +1,11 @@
-import AuthContextProvider, { useAuthCtx, User } from "./AuthCtx";
-import { getAccessToken, setAccessToken } from "./AccessToken";
+import AuthContextProvider, { useAuthCtx, User } from './AuthCtx'
+import { getAccessToken, setAccessToken, setConfig } from './AccessToken'
 
-export { AuthContextProvider, useAuthCtx, getAccessToken, setAccessToken };
-export type { User };
+export {
+  AuthContextProvider,
+  useAuthCtx,
+  getAccessToken,
+  setAccessToken,
+  setConfig,
+}
+export type { User }

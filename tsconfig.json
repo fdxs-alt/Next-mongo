@@ -19,7 +19,8 @@
       "@middleware": ["middleware"],
       "@utils": ["utils"],
       "@ctx": ["ctx"],
-      "@components": ["components"]
+      "@components": ["components"],
+      "@api": ["api"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

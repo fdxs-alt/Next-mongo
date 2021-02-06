@@ -1,12 +1,12 @@
-import { IRequest } from "@middleware";
-import { NextApiResponse } from "next";
-import { ErrorHandler } from "next-connect";
+import { IRequest } from '@middleware'
+import { NextApiResponse } from 'next'
+import { ErrorHandler } from 'next-connect'
 
 export class ErrorWithCode extends Error {
-  code: number;
+  code: number
   constructor({ message, code }: { message: string; code: number }) {
-    super(message);
-    this.code = code;
+    super(message)
+    this.code = code
   }
 }
 
@@ -16,7 +16,7 @@ const errorHandler: ErrorHandler<IRequest, NextApiResponse> = (
   res,
   next
 ) => {
-  res.status(err.code).json({ message: err.message });
-};
+  res.status(err.code).json({ message: err.message })
+}
 
-export default errorHandler;
+export default errorHandler

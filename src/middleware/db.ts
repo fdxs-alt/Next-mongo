@@ -1,11 +1,11 @@
-import { connectToDatabase } from "@db";
+import { connectToDatabase } from '@db'
 
 const database = async (req, res, next) => {
-  const { db, dbClient } = await connectToDatabase();
-  req.db = db;
-  req.dbClient = dbClient;
+  const { db, dbClient } = await connectToDatabase()
+  req.db = db
+  req.dbClient = dbClient
 
-  next();
-};
+  next()
+}
 
-export default database;
+export default database
