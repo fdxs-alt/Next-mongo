@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-namespace */
 import { MongoClient, Db } from 'mongodb'
 
 const { DATABASE_URL, MONGODB_DB } = process.env

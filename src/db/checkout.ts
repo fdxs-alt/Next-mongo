@@ -1,6 +1,6 @@
 import { Db } from 'mongodb'
 
-interface Chceckout {
+interface Checkout {
   userId: string
   bookId: string
   prolonged: boolean

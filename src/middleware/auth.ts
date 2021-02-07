@@ -1,5 +1,5 @@
 import { ACCESS_TYPE } from '@utils'
-import { decodeJwtToken, getUserById, JwtData } from '@db'
+import { decodeJwtToken, getUserById } from '@db'
 import { IRequest } from '@middleware'
 import { ObjectID } from 'mongodb'
 const authMiddleware = async (req: IRequest, res, next) => {
@@ -19,10 +19,12 @@ const authMiddleware = async (req: IRequest, res, next) => {
 
     if (decodedToken) {
       const { id } = decodedToken
-      const { password, ...rest } = await getUserById(req.db, id)
+      const { password: _, ...rest } = await getUserById(req.db, id)
       req.user = rest
     }
-  } catch (error) {}
+  } catch (error) {
+    return next()
+  }
 
   return next()
 }
