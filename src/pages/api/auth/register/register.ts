@@ -13,18 +13,16 @@ const handler = middleware.post(async (req, res, next) => {
   const { db } = req
 
   if (!nick || !password || !email) {
-    return next(new ErrorWithCode({ message: 'Fill up all fields', code: 400 }))
+    throw new ErrorWithCode({ message: 'Fill up all fields', code: 400 })
   }
 
   const users = await getUserByEmailOrNick(db, nick, email)
 
   if (users.length > 0) {
-    return next(
-      new ErrorWithCode({
-        message: 'User with such credentials already exists',
-        code: 400,
-      })
-    )
+    return new ErrorWithCode({
+      message: 'User with such credentials already exists',
+      code: 400,
+    })
   }
 
   const { insertedId } = await createUser(db, { email, password, nick })
@@ -33,7 +31,7 @@ const handler = middleware.post(async (req, res, next) => {
 
   const refreshToken = createJwtToken(newUser, REFRESH_TYPE)
 
-  sendRefreshCookie(res, refreshToken)
+  sendRefreshCookie(req, res, refreshToken)
 
   return res.json({
     ...newUser,

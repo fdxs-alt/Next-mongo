@@ -6,6 +6,7 @@ interface Props {}
 
 const Login: React.FC<Props> = (): JSX.Element => {
   const { login } = useAuthCtx()
+
   return (
     <LoginForm
       title="Login"

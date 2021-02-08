@@ -7,7 +7,7 @@ const handler = nc.post(async (req, res) => {
   const refreshToken = req.cookies.jrc
 
   if (!refreshToken) {
-    return res.json({ user: null, accessToken: null })
+    return res.json({ accessToken: null })
   }
 
   try {
@@ -19,19 +19,18 @@ const handler = nc.post(async (req, res) => {
     const user = await getUserById(req.db, decoded.id)
 
     if (!user) {
-      return res.json({ user: null, accessToken: null })
+      return res.json({ accessToken: null })
     }
 
     const { password: _, ...rest } = user
 
-    sendRefreshCookie(res, createJwtToken(rest, REFRESH_TYPE))
+    sendRefreshCookie(req, res, createJwtToken(rest, REFRESH_TYPE))
 
     return res.json({
-      user: rest,
       accessToken: createJwtToken(rest, ACCESS_TYPE),
     })
   } catch (error) {
-    return res.json({ user: null, accessToken: null })
+    return res.json({ accessToken: null })
   }
 })
 

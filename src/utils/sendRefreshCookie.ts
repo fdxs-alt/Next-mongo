@@ -1,21 +1,19 @@
-import { serialize } from 'cookie'
-import { NextApiResponse } from 'next'
-export const sendRefreshCookie = (res: NextApiResponse, token: string) => {
-  res.setHeader(
-    'Set-Cookie',
-    serialize('jrc', token, {
-      httpOnly: true,
-      maxAge: 60 * 60 * 24 * 7,
-    })
-  )
+import { NextApiRequest, NextApiResponse } from 'next'
+import Cookies from 'cookies'
+
+export const sendRefreshCookie = (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  token: string
+) => {
+  const cookies = new Cookies(req, res)
+  cookies.set('jrc', token, { httpOnly: true, overwrite: true, signed: false })
 }
 
-export const destroyRefreshCookie = (res: NextApiResponse) => {
-  res.setHeader(
-    'Set-Cookie',
-    serialize('jrc', null, {
-      httpOnly: true,
-      maxAge: 0,
-    })
-  )
+export const destroyRefreshCookie = (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
+  const cookies = new Cookies(req, res)
+  cookies.set('jrc')
 }

@@ -2,7 +2,7 @@ import { destroyRefreshCookie } from '@utils'
 import nc from '@middleware'
 
 const handler = nc.post((req, res) => {
-  destroyRefreshCookie(res)
+  destroyRefreshCookie(req, res)
   return res.json({ success: true })
 })
 

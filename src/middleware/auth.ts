@@ -21,12 +21,11 @@ const authMiddleware = async (req: IRequest, res, next) => {
       const { id } = decodedToken
       const { password: _, ...rest } = await getUserById(req.db, id)
       req.user = rest
+      return next()
     }
   } catch (error) {
     return next()
   }
-
-  return next()
 }
 
 export default authMiddleware
