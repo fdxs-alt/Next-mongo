@@ -1,8 +1,7 @@
 import { Box, Flex, Link } from '@chakra-ui/react'
 import NextLink from 'next/link'
-interface Props {}
 
-const Menu: React.FC<Props> = (): JSX.Element => {
+const Menu: React.FC = (): JSX.Element => {
   return (
     <Box w="100%" bg="orange.50">
       <Flex

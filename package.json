@@ -17,7 +17,7 @@
     "aws-sdk": "^2.834.0",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.0",
-    "cookie": "^0.4.1",
+    "cookies": "^0.8.0",
     "formidable": "^1.2.2",
     "formik": "^2.2.6",
     "framer-motion": "^3.2.2-rc.1",
@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",
-    "@types/cookie": "^0.4.0",
+    "@types/cookies": "^0.7.6",
     "@types/formidable": "^1.0.32",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/mongodb": "^3.6.3",

@@ -24,7 +24,7 @@ const handler = nc.post(async (req, res) => {
 
     const { password: _, ...rest } = user
 
-    sendRefreshCookie(res, createJwtToken(rest, REFRESH_TYPE))
+    sendRefreshCookie(req, res, createJwtToken(rest, REFRESH_TYPE))
 
     return res.json({
       user: rest,

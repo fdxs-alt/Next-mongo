@@ -2,7 +2,6 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 
 const Axios = axios.create({
   baseURL: 'http://localhost:3000',
-  withCredentials: true,
 })
 
 const get = <T>(

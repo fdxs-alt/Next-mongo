@@ -28,7 +28,7 @@ const handler = middleware.post(async (req, res, next) => {
 
   const refreshToken = createJwtToken(rest, REFRESH_TYPE)
 
-  sendRefreshCookie(res, refreshToken)
+  sendRefreshCookie(req, res, refreshToken)
 
   return res.json({
     ...rest,

@@ -8,6 +8,7 @@ import {
   Button,
 } from '@chakra-ui/react'
 import { Formik, Form, Field } from 'formik'
+import { useRouter } from 'next/router'
 import React from 'react'
 import Layout from './Layout'
 
@@ -24,6 +25,7 @@ const LoginForm: React.FC<Props> = ({
   isAdmin,
   handleSubmit,
 }): JSX.Element => {
+  const router = useRouter()
   return (
     <Layout title={title}>
       <Flex alignItems="center" justifyContent="center" w="100%" mt={200}>
@@ -31,6 +33,7 @@ const LoginForm: React.FC<Props> = ({
           initialValues={{ nick: '', password: '' }}
           onSubmit={async (values) => {
             await handleSubmit(values)
+            router.push(isAdmin ? '/admin/dashboard' : '/user/dashboard')
           }}
         >
           {({ isSubmitting }) => (

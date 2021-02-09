@@ -1,7 +1,8 @@
 import type { AppProps } from 'next/app'
-import { AuthContextProvider } from '@ctx'
+import { AuthContextProvider, User } from '@ctx'
 import { ChakraProvider } from '@chakra-ui/react'
-
+import App from 'next/app'
+import { post } from '@api'
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider>

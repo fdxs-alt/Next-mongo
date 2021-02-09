@@ -13,12 +13,14 @@ import {
 import { Layout } from '@components'
 import { useAuthCtx } from '@ctx'
 import { Field, Form, Formik } from 'formik'
+import { useRouter } from 'next/router'
 import React from 'react'
 
 interface Props {}
 
 const Register: React.FC<Props> = (): JSX.Element => {
   const { register } = useAuthCtx()
+  const router = useRouter()
   return (
     <Layout title="Register">
       <Flex alignItems="center" justifyContent="space-between" w="80%" h="80%">
@@ -41,6 +43,7 @@ const Register: React.FC<Props> = (): JSX.Element => {
             const { repeatPassword: _, ...rest } = values
             await register(rest)
             resetForm()
+            router.push('/user/dashboard')
           }}
         >
           {({ isSubmitting }) => {

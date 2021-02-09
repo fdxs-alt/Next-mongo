@@ -41,7 +41,6 @@ const AuthCtx = createContext<CtxProps>({} as CtxProps)
 const AuthCtxProvider: React.FC<Props> = ({ children }) => {
   const [user, setUser] = useState<User | null>({} as User)
   const toast = useToast()
-
   const createErrorToast = useCallback((description: string) => {
     return toast({
       title: 'Error',
@@ -63,7 +62,6 @@ const AuthCtxProvider: React.FC<Props> = ({ children }) => {
       setUser(rest)
       setAccessToken(accessToken)
     } catch (error) {
-      console.log(error.response)
       createErrorToast(error.response.data.message)
     }
   }, [])
@@ -94,13 +92,16 @@ const AuthCtxProvider: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const { data } = await post<null, { user: User; accessToken: string }>(
-        '/api/auth/refresh'
-      )
-      const { accessToken, user } = data
-      setUser(user)
-      setAccessToken(accessToken)
+      try {
+        const { data } = await post<null, { user: User; accessToken: string }>(
+          '/api/auth/refresh'
+        )
+        const { accessToken, user } = data
+        setUser(user)
+        setAccessToken(accessToken)
+      } catch (error) {}
     }
+
     fetchUser()
 
     const id = setInterval(() => {
