@@ -1,32 +1,11 @@
-import { ACCESS_TYPE } from '@utils'
-import { decodeJwtToken, getUserById } from '@db'
-import { IRequest } from '@middleware'
-import { ObjectID } from 'mongodb'
-const authMiddleware = async (req: IRequest, res, next) => {
-  const authorization = req.headers.authorization
+import { withIronSession } from 'next-iron-session'
 
-  if (!authorization) {
-    return next()
-  }
-
-  try {
-    const token = authorization.split(' ')[1]
-    const decodedToken = (await decodeJwtToken(token, ACCESS_TYPE)) as {
-      exp: number
-      iat: number
-      id: ObjectID
-    }
-
-    if (decodedToken) {
-      const { id } = decodedToken
-      const { password: _, ...rest } = await getUserById(req.db, id)
-      req.user = rest
-    }
-  } catch (error) {
-    return next()
-  }
-
-  return next()
+export const withSession = (handler) => {
+  return withIronSession(handler, {
+    password: process.env.SECRET,
+    cookieName: 'session',
+    cookieOptions: {
+      secure: process.env.NODE_ENV === 'production' ? true : false,
+    },
+  })
 }
-
-export default authMiddleware

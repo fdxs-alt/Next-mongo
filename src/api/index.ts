@@ -1,3 +1,3 @@
-import { get, post } from './request'
+import { fetcher } from './request'
 
-export { get, post }
+export { fetcher }

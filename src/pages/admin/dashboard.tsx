@@ -1,6 +1,5 @@
 import { Box } from '@chakra-ui/layout'
 import { Layout } from '@components'
-import { getAccessToken } from '@ctx'
 import React from 'react'
 
 const Dashboard = () => {

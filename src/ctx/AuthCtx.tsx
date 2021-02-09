@@ -1,13 +1,7 @@
-import { post } from '@api'
+import { fetcher } from '@api'
 import { useToast } from '@chakra-ui/toast'
-import { setAccessToken } from '@ctx'
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react'
+import { useRouter } from 'next/router'
+import React, { createContext, useCallback, useContext, useState } from 'react'
 
 export interface User {
   nick: string
@@ -34,6 +28,7 @@ interface CtxProps {
   login: (args: LoginValues) => Promise<void>
   register: (args: RegisterValues) => Promise<void>
   logout: () => Promise<void>
+  push: (url: string) => void
 }
 
 const AuthCtx = createContext<CtxProps>({} as CtxProps)
@@ -41,6 +36,8 @@ const AuthCtx = createContext<CtxProps>({} as CtxProps)
 const AuthCtxProvider: React.FC<Props> = ({ children }) => {
   const [user, setUser] = useState<User | null>({} as User)
   const toast = useToast()
+  const router = useRouter()
+
   const createErrorToast = useCallback((description: string) => {
     return toast({
       title: 'Error',
@@ -51,70 +48,16 @@ const AuthCtxProvider: React.FC<Props> = ({ children }) => {
     })
   }, [])
 
-  const login = useCallback(async (values: LoginValues) => {
-    try {
-      const {
-        data: { accessToken, ...rest },
-      } = await post<LoginValues, User & { accessToken: string }>(
-        '/api/auth/login',
-        values
-      )
-      setUser(rest)
-      setAccessToken(accessToken)
-    } catch (error) {
-      createErrorToast(error.response.data.message)
-    }
-  }, [])
+  const push = useCallback((url: string) => router.push(url), [router])
 
-  const register = useCallback(async (values: RegisterValues) => {
-    try {
-      const {
-        data: { accessToken, ...rest },
-      } = await post<RegisterValues, User & { accessToken: string }>(
-        '/api/auth/register',
-        values
-      )
-      setUser(rest)
-      setAccessToken(accessToken)
-    } catch (error) {
-      createErrorToast(error.response.data.message)
-    }
-  }, [])
+  const login = useCallback(async (values: LoginValues) => {}, [])
 
-  const logout = useCallback(async () => {
-    try {
-      await post('/api/auth/logout', null)
-      setUser(null)
-    } catch (error) {
-      createErrorToast(error.response.data.message)
-    }
-  }, [])
+  const register = useCallback(async (values: RegisterValues) => {}, [])
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const { data } = await post<null, { user: User; accessToken: string }>(
-          '/api/auth/refresh'
-        )
-        const { accessToken, user } = data
-        setUser(user)
-        setAccessToken(accessToken)
-      } catch (error) {}
-    }
-
-    fetchUser()
-
-    const id = setInterval(() => {
-      fetchUser()
-    }, 1000 * 60 * 15)
-
-    return () => {
-      clearInterval(id)
-    }
-  }, [])
+  const logout = useCallback(async () => {}, [])
 
   return (
-    <AuthCtx.Provider value={{ user, login, register, logout }}>
+    <AuthCtx.Provider value={{ user, login, register, logout, push }}>
       {children}
     </AuthCtx.Provider>
   )

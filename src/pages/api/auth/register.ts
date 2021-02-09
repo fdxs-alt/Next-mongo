@@ -1,11 +1,5 @@
-import middleware, { ErrorWithCode } from '@middleware'
-import {
-  createJwtToken,
-  createUser,
-  getUserByEmailOrNick,
-  JwtPayload,
-} from '@db'
-import { ACCESS_TYPE, REFRESH_TYPE, sendRefreshCookie } from '@utils'
+import middleware, { ErrorWithCode, withSession } from '@middleware'
+import { createUser, getUserByEmailOrNick } from '@db'
 
 const handler = middleware.post(async (req, res, next) => {
   const { nick, password, email } = req.body
@@ -29,16 +23,15 @@ const handler = middleware.post(async (req, res, next) => {
 
   const { insertedId } = await createUser(db, { email, password, nick })
 
-  const newUser = { email, _id: insertedId, nick, role: 'USER' } as JwtPayload
+  const newUser = { email, _id: insertedId, nick, role: 'USER' }
 
-  const refreshToken = createJwtToken(newUser, REFRESH_TYPE)
+  req.session.set('user', { ...newUser })
 
-  sendRefreshCookie(req, res, refreshToken)
+  await req.session.save()
 
   return res.json({
-    ...newUser,
-    accessToken: createJwtToken(newUser, ACCESS_TYPE),
+    user: { ...newUser },
   })
 })
 
-export default handler
+export default withSession(handler)

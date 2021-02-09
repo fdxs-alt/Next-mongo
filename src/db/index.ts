@@ -4,11 +4,7 @@ import {
   removeUser,
   getUserByNick,
   getUserByEmailOrNick,
-  decodeJwtToken,
-  createJwtToken,
   User,
-  JwtData,
-  JwtPayload,
 } from './user'
 import { createCheckout, prolongCheckout, removeCheckout } from './checkout'
 import {
@@ -57,7 +53,5 @@ export {
   getSearchedBooks,
   updateBook,
   updateBorrowedCount,
-  decodeJwtToken,
-  createJwtToken,
 }
-export type { User, JwtData, JwtPayload }
+export type { User }

@@ -1,9 +1,9 @@
-import { destroyRefreshCookie } from '@utils'
-import nc from '@middleware'
+import nc, { withSession } from '@middleware'
 
 const handler = nc.post((req, res) => {
-  destroyRefreshCookie(req, res)
+  req.session.destroy()
+
   return res.json({ success: true })
 })
 
-export default handler
+export default withSession(handler)

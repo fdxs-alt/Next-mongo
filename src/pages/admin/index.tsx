@@ -2,9 +2,7 @@ import { LoginForm } from '@components'
 import { useAuthCtx } from '@ctx'
 import React from 'react'
 
-interface Props {}
-
-const AdminHome: React.FC<Props> = (): JSX.Element => {
+const AdminHome: React.FC = (): JSX.Element => {
   const { login } = useAuthCtx()
   return (
     <LoginForm

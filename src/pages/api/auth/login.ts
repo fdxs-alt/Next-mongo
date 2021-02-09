@@ -1,7 +1,6 @@
 import { WithId } from 'mongodb'
-import { getUserByNick, createJwtToken, User } from '@db'
-import middleware, { ErrorWithCode } from '@middleware'
-import { ACCESS_TYPE, REFRESH_TYPE, sendRefreshCookie } from '@utils'
+import { getUserByNick, User } from '@db'
+import middleware, { ErrorWithCode, withSession } from '@middleware'
 import { compare } from 'bcrypt'
 
 const handler = middleware.post(async (req, res, next) => {
@@ -24,16 +23,15 @@ const handler = middleware.post(async (req, res, next) => {
     return next(new ErrorWithCode({ message: 'User unauthorized', code: 401 }))
   }
 
-  const { password: userPasssword, ...rest } = user as WithId<User>
+  const { password: _, ...rest } = user as WithId<User>
 
-  const refreshToken = createJwtToken(rest, REFRESH_TYPE)
+  req.session.set('user', { ...rest })
 
-  sendRefreshCookie(req, res, refreshToken)
+  await req.session.save()
 
   return res.json({
-    ...rest,
-    accessToken: createJwtToken(rest, ACCESS_TYPE),
+    user: { ...rest },
   })
 })
 
-export default handler
+export default withSession(handler)

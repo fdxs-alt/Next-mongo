@@ -1,22 +1,10 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
+import axios from 'axios'
 
 const Axios = axios.create({
   baseURL: 'http://localhost:3000',
+  withCredentials: true,
 })
 
-const get = <T>(
-  url: string,
-  config?: AxiosRequestConfig
-): Promise<AxiosResponse<T>> => {
-  return Axios.get(url, config)
-}
+const fetcher = <T>(url: string) => Axios.get(url).then((res) => res.data as T)
 
-const post = <T, K>(
-  url: string,
-  body?: T,
-  config?: AxiosRequestConfig
-): Promise<AxiosResponse<K>> => {
-  return Axios.post(url, body, config)
-}
-
-export { get, post }
+export { fetcher }
