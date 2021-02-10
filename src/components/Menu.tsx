@@ -1,7 +1,14 @@
-import { Box, Flex, Link } from '@chakra-ui/react'
+import { Box, Flex, Link, Button } from '@chakra-ui/react'
+import { useAuthCtx } from '@ctx'
+import { isEmpty } from '@utils'
 import NextLink from 'next/link'
+import React, { useMemo } from 'react'
 
 const Menu: React.FC = (): JSX.Element => {
+  const { user, logout } = useAuthCtx()
+
+  const isUser = useMemo(() => isEmpty(user), [user])
+
   return (
     <Box w="100%" bg="orange.50">
       <Flex
@@ -11,7 +18,7 @@ const Menu: React.FC = (): JSX.Element => {
         alignItems="center"
         margin="auto"
       >
-        {MenuItems.map((el, i) => {
+        {MenuItems[!isUser ? 1 : 0].map((el, i) => {
           return (
             <NextLink href={el.path} key={i}>
               <Link color="gray.700" fontSize={18} fontWeight="500">
@@ -20,6 +27,23 @@ const Menu: React.FC = (): JSX.Element => {
             </NextLink>
           )
         })}
+        {!isUser && (
+          <Button
+            w="fit-content"
+            type="button"
+            onClick={async () => {
+              await logout()
+            }}
+            onKeyPress={async (e) => {
+              if (e.key === 'Enter') {
+                await logout()
+              }
+            }}
+            fontSize={20}
+          >
+            Log out
+          </Button>
+        )}
       </Flex>
     </Box>
   )
@@ -28,24 +52,36 @@ const Menu: React.FC = (): JSX.Element => {
 export default Menu
 
 const MenuItems = [
-  {
-    name: 'Home',
-    path: '/',
-  },
-  {
-    name: 'Books',
-    path: '/books',
-  },
-  {
-    name: 'Dashboard',
-    path: '/dashboard',
-  },
-  {
-    name: 'Login',
-    path: '/login',
-  },
-  {
-    name: 'About',
-    path: '/about',
-  },
+  [
+    {
+      name: 'Home',
+      path: '/',
+    },
+    {
+      name: 'Dashboard',
+      path: '/user/dashboard',
+    },
+    {
+      name: 'Login',
+      path: '/login',
+    },
+  ],
+  [
+    {
+      name: 'Dashboard',
+      path: '/user/dashboard',
+    },
+    {
+      name: 'Books',
+      path: '/user/books',
+    },
+    {
+      name: 'Checkout',
+      path: '/user/checkout',
+    },
+    {
+      name: 'My account',
+      path: '/user/account',
+    },
+  ],
 ]

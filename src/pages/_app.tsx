@@ -1,14 +1,16 @@
 import type { AppProps } from 'next/app'
-import { AuthContextProvider, User } from '@ctx'
+import { AuthContextProvider } from '@ctx'
 import { ChakraProvider } from '@chakra-ui/react'
-import App from 'next/app'
-import { post } from '@api'
+import { SWRConfig } from 'swr'
+import { fetcher } from '@api'
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider>
-      <AuthContextProvider>
-        <Component {...pageProps} />
-      </AuthContextProvider>
+      <SWRConfig value={{ fetcher }}>
+        <AuthContextProvider>
+          <Component {...pageProps} />
+        </AuthContextProvider>
+      </SWRConfig>
     </ChakraProvider>
   )
 }
