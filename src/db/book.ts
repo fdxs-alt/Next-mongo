@@ -1,4 +1,4 @@
-import { ObjectID } from 'mongodb'
+import { ObjectID, Timestamp } from 'mongodb'
 import { Db } from 'mongodb'
 
 interface Book {
@@ -9,9 +9,9 @@ interface Book {
   extraInfo?: string
   description: string
   count: number
-  genre: string
+  genre: string[]
   borrowed: number
-  timeAdded: Date
+  timeAdded: Timestamp
 }
 
 const createBook = async (db: Db, book: Book) => {

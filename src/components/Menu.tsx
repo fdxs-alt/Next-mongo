@@ -18,7 +18,7 @@ const Menu: React.FC = (): JSX.Element => {
         alignItems="center"
         margin="auto"
       >
-        {MenuItems[!isUser ? 1 : 0].map((el, i) => {
+        {MenuItems[isUser ? 1 : 0].map((el, i) => {
           return (
             <NextLink href={el.path} key={i}>
               <Link color="gray.700" fontSize={18} fontWeight="500">
@@ -27,16 +27,16 @@ const Menu: React.FC = (): JSX.Element => {
             </NextLink>
           )
         })}
-        {!isUser && (
+        {isUser && (
           <Button
             w="fit-content"
             type="button"
-            onClick={async () => {
-              await logout()
+            onClick={() => {
+              logout()
             }}
             onKeyPress={async (e) => {
               if (e.key === 'Enter') {
-                await logout()
+                logout()
               }
             }}
             fontSize={20}

@@ -11,18 +11,16 @@ interface Author {
     {
       id: ObjectID
       title: string
-      genre: string
     }
   ]
 }
 
 interface Book {
-  id: ObjectID
+  id: string
   title: string
-  genre: string
 }
 
-interface AuthorData {
+export interface AuthorData {
   name: string
   surname: string
   dateOfBirth: Date
@@ -37,7 +35,7 @@ const createAuthor = async (database: Db, data: AuthorData) => {
 
   return newAuthor
 }
-const deleteAuthor = async (database: Db, id: ObjectID) => {
+const deleteAuthor = async (database: Db, id: string) => {
   const authorsCollection = database.collection<Author>('authors')
 
   const deletedAuthor = await authorsCollection.findOneAndDelete({
@@ -46,7 +44,7 @@ const deleteAuthor = async (database: Db, id: ObjectID) => {
 
   return deletedAuthor
 }
-const addBookToAuthor = async (db: Db, book: Book, id: ObjectID) => {
+const addBookToAuthor = async (db: Db, book: Book, id: string) => {
   const authorsCollection = db.collection<Author>('authors')
   const updatedAuthor = await authorsCollection.findOneAndUpdate(
     {
@@ -71,14 +69,25 @@ const removeBookFromAuthor = async (db: Db, id: ObjectID, bookID: ObjectID) => {
   return updatedAuthor
 }
 const updateAuthorData = async (db: Db) => {}
-const getAuthorById = async (db: Db, id: ObjectID) => {
+const getAuthorById = async (db: Db, id: string) => {
   const authorsCollection = db.collection<Author>('authors')
 
   const author = await authorsCollection.findOne({ _id: new ObjectID(id) })
 
   return author
 }
-const getAuthors = async (db: Db) => {}
+const getAuthors = async (db: Db, page: number) => {
+  const authorsCollection = db.collection<Author>('authors')
+
+  const authors = await authorsCollection
+    .find()
+    .sort({ surname: 1 })
+    .limit(20)
+    .skip(page * 20)
+    .toArray()
+
+  return authors
+}
 
 export {
   createAuthor,

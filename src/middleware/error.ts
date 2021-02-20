@@ -16,7 +16,9 @@ const errorHandler: ErrorHandler<IRequest, NextApiResponse> = (
   res,
   next
 ) => {
-  res.status(err.code).json({ message: err.message })
+  res
+    .status(err.code || 500)
+    .json({ message: err.message || 'Internal server error' })
 }
 
 export default errorHandler

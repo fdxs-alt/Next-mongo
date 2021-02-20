@@ -17,6 +17,7 @@
     "aws-sdk": "^2.834.0",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.0",
+    "dayjs": "^1.10.4",
     "formidable": "^1.2.2",
     "formik": "^2.2.6",
     "framer-motion": "^3.2.2-rc.1",
@@ -27,6 +28,7 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-helmet": "^6.1.0",
+    "react-table": "^7.6.3",
     "swr": "^0.4.2"
   },
   "devDependencies": {
