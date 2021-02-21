@@ -4372,10 +4372,10 @@ neo-async@^2.5.0, neo-async@^2.6.1, neo-async@^2.6.2:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
-next-connect@^0.9.1:
-  version "0.9.1"
-  resolved "https://registry.yarnpkg.com/next-connect/-/next-connect-0.9.1.tgz#884faaf3df3af37838568009b84696c372e20272"
-  integrity sha512-CPEdciM43y9oHKxE/KVtlB+vbWwTCYqPr8/EjzoMtSRIi0s7XhdSrY6VShlACnnsJzsAr/RZnL3/xFC/vjgZUQ==
+next-connect@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/next-connect/-/next-connect-0.10.0.tgz#61829818bea1989a003bf093f321c09b95c72cad"
+  integrity sha512-W8oiw8ylXdMQJQG/FtBaSbXQkf9YgqEPh5sjfFOx6BlZVVLd8UP7Cp7qZe32lVAuQEGnU/JlmWkyzBOdt6xVrw==
   dependencies:
     trouter "^3.1.0"
 

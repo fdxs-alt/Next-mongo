@@ -5,7 +5,7 @@ import { NextApiRequest } from 'next'
 import { Session } from 'next-iron-session'
 import database from './db'
 import errorHandler, { ErrorWithCode } from './error'
-
+import { asyncHandler } from './async'
 export interface IRequest extends NextApiRequest {
   db: Db
   session: Session
@@ -19,4 +19,5 @@ export {
   authMiddleware,
   database,
   errorHandler,
+  asyncHandler,
 }
