@@ -1,3 +1,4 @@
+import { getUser } from './session'
 import { ErrorWithCode, IRequest } from '@middleware'
 import { NextApiResponse } from 'next'
 import { withIronSession, ironSession } from 'next-iron-session'
@@ -20,9 +21,18 @@ export const session = ironSession({
   },
 })
 
+export const common = (req: IRequest, res: NextApiResponse, next) => {
+  const user = getUser(req)
+
+  req.user = user
+
+  next()
+}
+
 export const authMiddleware = (req: IRequest, res: NextApiResponse, next) => {
   try {
     const user = req.session.get('user')
+
     if (!user) {
       throw new ErrorWithCode({ message: 'User unauthorized', code: 401 })
     }
@@ -44,6 +54,6 @@ export const adminAuthMiddleware = (
     }
     next()
   } catch (error) {
-    return next(error)
+    next(error)
   }
 }

@@ -4,7 +4,7 @@ import { compare } from 'bcrypt'
 import { WithId } from 'mongodb'
 import { NextApiResponse } from 'next'
 
-class AuthController {
+export class AuthController {
   static me(req: IRequest, res: NextApiResponse) {
     const user = req.session.get('user')
 
@@ -77,5 +77,3 @@ class AuthController {
     })
   }
 }
-
-export default AuthController

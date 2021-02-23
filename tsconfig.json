@@ -20,7 +20,8 @@
       "@utils": ["utils"],
       "@ctx": ["ctx"],
       "@components": ["components"],
-      "@api": ["api"]
+      "@api": ["api"],
+      "@controllers": ["routes"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

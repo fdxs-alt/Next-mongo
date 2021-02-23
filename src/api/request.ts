@@ -13,6 +13,13 @@ const post = <T, K>(
   return Axios.post(url, body, config)
 }
 
+const get = <K>(
+  url: string,
+  config?: AxiosRequestConfig
+): Promise<AxiosResponse<K>> => {
+  return Axios.get(url, config)
+}
+
 const fetcher = <T>(url: string) => Axios.get(url).then((res) => res.data as T)
 
-export { fetcher, post }
+export { fetcher, post, get }

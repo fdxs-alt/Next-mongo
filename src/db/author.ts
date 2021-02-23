@@ -24,7 +24,7 @@ export interface AuthorData {
   name: string
   surname: string
   dateOfBirth: Date
-  dateOfDeath?: Date | 'Alive'
+  dateOfDeath: Date | 'Alive'
   description: string
 }
 
