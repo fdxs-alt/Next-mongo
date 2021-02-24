@@ -1,7 +1,7 @@
 import { ObjectID } from 'mongodb'
 import { Db } from 'mongodb'
 
-interface Author {
+export interface Author {
   name: string
   surname: string
   dateOfBirth: string
@@ -53,7 +53,7 @@ const addBookToAuthor = async (db: Db, book: Book, id: string) => {
     {
       _id: new ObjectID(id),
     },
-    { $push: { books: { ...book, id: new ObjectID(book.id) } } }
+    { $push: { books: new ObjectID(book.id) } }
   )
 
   return updatedAuthor
@@ -66,7 +66,7 @@ const removeBookFromAuthor = async (db: Db, id: ObjectID, bookID: ObjectID) => {
     {
       _id: new ObjectID(id),
     },
-    { $pull: { books: { id: new ObjectID(bookID) } } }
+    { $pull: { books: new ObjectID(bookID) } }
   )
 
   return updatedAuthor

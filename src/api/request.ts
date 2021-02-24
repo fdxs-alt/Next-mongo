@@ -20,6 +20,13 @@ const get = <K>(
   return Axios.get(url, config)
 }
 
+const del = <K>(
+  url: string,
+  config?: AxiosRequestConfig
+): Promise<AxiosResponse<K>> => {
+  return Axios.delete(url, config)
+}
+
 const fetcher = <T>(url: string) => Axios.get(url).then((res) => res.data as T)
 
-export { fetcher, post, get }
+export { fetcher, post, get, del }

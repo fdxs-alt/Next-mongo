@@ -1,2 +1,2 @@
-import { fetcher, post, get } from './request'
-export { fetcher, post, get }
+import { fetcher, post, get, del } from './request'
+export { fetcher, post, get, del }

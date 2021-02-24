@@ -16,6 +16,7 @@ import {
   removeBookFromAuthor,
   updateAuthorData,
   AuthorData,
+  Author,
 } from './author'
 import {
   createBook,
@@ -55,4 +56,4 @@ export {
   updateBook,
   updateBorrowedCount,
 }
-export type { User, AuthorData }
+export type { User, AuthorData, Author }
