@@ -15,7 +15,7 @@ export class AuthorControler {
 
     const newAuthor = await create(db, authorData)
 
-    res.status(201).json({ author: newAuthor })
+    res.status(201).json({ author: { ...newAuthor.ops[0] } })
   }
 
   static async getAuthors(req: IRequest, res: NextApiResponse) {

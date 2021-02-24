@@ -9,6 +9,7 @@ import {
   ModalCloseButton,
   Button,
 } from '@chakra-ui/react'
+import { Form } from 'formik'
 interface Props {
   title?: string
   isOpen: boolean
@@ -32,9 +33,6 @@ const Modal: React.FC<Props> = ({
         <ModalBody>{children}</ModalBody>
 
         <ModalFooter>
-          <Button mr={3} type="submit">
-            {cta}
-          </Button>
           <Button colorScheme="orange" mr={3} onClick={onClose}>
             Close
           </Button>

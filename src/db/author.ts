@@ -4,15 +4,10 @@ import { Db } from 'mongodb'
 interface Author {
   name: string
   surname: string
-  dateOfBirth: Date
-  dateOfDeath?: Date | 'Alive'
+  dateOfBirth: string
+  dateOfDeath?: string | 'Alive'
   description: string
-  books?: [
-    {
-      id: ObjectID
-      title: string
-    }
-  ]
+  books?: ObjectID[]
 }
 
 interface Book {
@@ -23,15 +18,23 @@ interface Book {
 export interface AuthorData {
   name: string
   surname: string
-  dateOfBirth: Date
-  dateOfDeath: Date | 'Alive'
+  dateOfBirth: string
+  dateOfDeath: string | 'Alive'
   description: string
 }
 
 const createAuthor = async (database: Db, data: AuthorData) => {
   const authorsCollection = database.collection<Author>('authors')
 
-  const newAuthor = await authorsCollection.insertOne(data)
+  let dateOfDeath = ''
+
+  if (!data.dateOfDeath) {
+    dateOfDeath = 'Alive'
+  } else {
+    dateOfDeath = data.dateOfDeath
+  }
+
+  const newAuthor = await authorsCollection.insertOne({ ...data, dateOfDeath })
 
   return newAuthor
 }

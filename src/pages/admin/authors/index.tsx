@@ -1,16 +1,25 @@
+import { post } from '@api'
 import { Button, Flex, Heading, useDisclosure } from '@chakra-ui/react'
 import { AuthorData, AuthorForm, Layout, Modal } from '@components'
 import { User } from '@ctx'
+import { AuthorData as AuthorDataType } from '@db'
 import { withSession } from '@middleware'
 import { redirect } from '@utils'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import useSWR from 'swr'
 import { getServerSidePropsWithSession } from 'types'
 
 const Authors = () => {
   const [page, setPage] = useState(0)
-  const { data } = useSWR(`/api/admin/authors/${page}`)
+  const { data, mutate } = useSWR(`/api/admin/authors/${page}`)
   const { isOpen, onOpen, onClose } = useDisclosure()
+  console.log(data)
+  const handleSubmit = useCallback(async (newAuthor: AuthorDataType) => {
+    const { data: author } = await post('/api/admin/author/create', {
+      ...newAuthor,
+    })
+    mutate({ ...data, author })
+  }, [])
 
   return (
     <Layout title="Admin | Authors" isAdmin>
@@ -27,7 +36,7 @@ const Authors = () => {
           title="Create new author"
           cta="Create"
         >
-          <AuthorForm />
+          <AuthorForm handleSubmit={handleSubmit} />
         </Modal>
         <AuthorData />
       </Flex>
