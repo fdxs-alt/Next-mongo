@@ -15,6 +15,10 @@ interface Book {
   title: string
 }
 
+export interface AuthorWithID extends Author {
+  _id: string
+}
+
 export interface AuthorData {
   name: string
   surname: string

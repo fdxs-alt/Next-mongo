@@ -2,17 +2,16 @@ import { post, del } from '@api'
 import { Button, Flex, Heading, useDisclosure } from '@chakra-ui/react'
 import { AuthorData, AuthorForm, Layout, Modal } from '@components'
 import { User } from '@ctx'
-import { AuthorData as AuthorDataType } from '@db'
+import { AuthorData as AuthorDataType, AuthorWithID } from '@db'
 import { withSession } from '@middleware'
 import { redirect } from '@utils'
-import { WithId } from 'mongodb'
 import React, { useCallback, useState } from 'react'
 import useSWR from 'swr'
 import { getServerSidePropsWithSession } from 'types'
 
 const Authors = () => {
   const [page, setPage] = useState(0)
-  const { data, mutate } = useSWR<{ authors: WithId<AuthorDataType>[] }>(
+  const { data, mutate } = useSWR<{ authors: AuthorWithID[] }>(
     `/api/admin/authors/${page}`
   )
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -22,7 +21,7 @@ const Authors = () => {
       try {
         const { data: author } = await post<
           AuthorDataType,
-          { author: WithId<AuthorDataType> }
+          { author: AuthorWithID }
         >('/api/admin/author/create', {
           ...newAuthor,
         })
@@ -39,9 +38,7 @@ const Authors = () => {
     async (id: string) => {
       try {
         await del(`/api/admin/author/${id}`)
-        const newData = data.authors.filter(
-          (el) => ((el._id as unknown) as string) !== id
-        )
+        const newData = data.authors.filter((el) => el._id !== id)
 
         mutate({ ...data, authors: newData })
       } catch (error) {

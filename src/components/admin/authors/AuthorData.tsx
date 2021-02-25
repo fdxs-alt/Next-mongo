@@ -1,14 +1,16 @@
+/* eslint-disable */
 import React from 'react'
 import { useTable } from 'react-table'
 import { Table, Thead, Tbody, Tr, Th, Td, Button } from '@chakra-ui/react'
-import { AuthorData as AuthorDataType } from '@db'
-import { WithId } from 'mongodb'
+import { AuthorWithID } from '@db'
+import { useRouter } from 'next/router'
 interface Props {
-  data: WithId<AuthorDataType>[]
+  data: AuthorWithID[]
   deleteAuth: (id: string) => void
 }
 
 const AuthorData: React.FC<Props> = ({ data, deleteAuth }): JSX.Element => {
+  const router = useRouter()
   const columns = React.useMemo(
     () => [
       {
@@ -57,6 +59,7 @@ const AuthorData: React.FC<Props> = ({ data, deleteAuth }): JSX.Element => {
               </Th>
             ))}
             <Th>Delete</Th>
+            <Th>More</Th>
           </Tr>
         ))}
       </Thead>
@@ -72,14 +75,23 @@ const AuthorData: React.FC<Props> = ({ data, deleteAuth }): JSX.Element => {
                   </Td>
                 )
               })}
+
+              <Td>
+                <Button
+                  type="button"
+                  onClick={() => deleteAuth(row.original._id)}
+                >
+                  Delete
+                </Button>
+              </Td>
               <Td>
                 <Button
                   type="button"
                   onClick={() =>
-                    deleteAuth((row.original._id as uknown) as string)
+                    router.push(`/admin/authors/${row.original._id}`)
                   }
                 >
-                  Delete
+                  More
                 </Button>
               </Td>
             </Tr>

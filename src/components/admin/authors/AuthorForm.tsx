@@ -32,7 +32,13 @@ const AuthorForm: React.FC<Props> = ({ handleSubmit }): JSX.Element => {
           <Form>
             <FormControl id="name" mb={2}>
               <FormLabel>Name</FormLabel>
-              <Field name="name" type="text" as={Input} placeholder="Name" />
+              <Field
+                name="name"
+                type="text"
+                as={Input}
+                placeholder="Name"
+                required
+              />
             </FormControl>
             <FormControl id="surname" mb={2}>
               <FormLabel>Surname</FormLabel>
@@ -41,11 +47,12 @@ const AuthorForm: React.FC<Props> = ({ handleSubmit }): JSX.Element => {
                 type="text"
                 as={Input}
                 placeholder="Surname"
+                required
               />
             </FormControl>
             <FormControl id="dateOfBirth" mb={2}>
               <FormLabel>Date of birth</FormLabel>
-              <Field name="dateOfBirth" type="date" as={Input} />
+              <Field name="dateOfBirth" type="date" as={Input} required />
             </FormControl>
             <FormControl id="dateOfDeath" mb={2}>
               <FormLabel>Date of death</FormLabel>
