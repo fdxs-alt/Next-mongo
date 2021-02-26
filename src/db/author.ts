@@ -1,4 +1,4 @@
-import { uploadFile } from '@utils'
+import { FileUpload } from '@utils'
 import { ObjectID } from 'mongodb'
 import { Db } from 'mongodb'
 export interface MulterFile {
@@ -44,7 +44,8 @@ const createAuthor = async (database: Db, data: AuthorData) => {
   let location: { Location: string; Key: string } | null = null
 
   if (image) {
-    const { Location, Key } = await uploadFile(image)
+    const fileUploader = new FileUpload(image)
+    const { Location, Key } = await fileUploader.upload()
     location = { Location, Key }
   }
 
