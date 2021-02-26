@@ -7,13 +7,13 @@ const SingleAuthor: React.FC = (): JSX.Element => {
   const router = useRouter()
   const { id } = router.query
   const { data: author, error } = useSWR<AuthorWithID>(
-    `/api/admin/author/${id}`
+    `/api/parser/admin/author/${id}`
   )
-  const { data: book } = useSWR(`/api/admin/book/author/${id}`)
+  const { data: book } = useSWR(`/api/parser/admin/book/author/${id}`)
 
   return (
     <Layout title="Author" isAdmin>
-      <About id={id as string} author={author} />
+      <About author={author} />
       <AuthorBooks />
     </Layout>
   )

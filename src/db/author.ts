@@ -1,6 +1,14 @@
+import { uploadFile } from '@utils'
 import { ObjectID } from 'mongodb'
 import { Db } from 'mongodb'
-
+export interface MulterFile {
+  fieldname: string
+  originalname: string
+  encoding: string
+  mimetype: string
+  buffer: Buffer
+  size: number
+}
 export interface Author {
   name: string
   surname: string
@@ -8,6 +16,7 @@ export interface Author {
   dateOfDeath?: string | 'Alive'
   description: string
   books?: ObjectID[]
+  image?: { Location: string; Key: string }
 }
 
 interface Book {
@@ -25,12 +34,19 @@ export interface AuthorData {
   dateOfBirth: string
   dateOfDeath: string | 'Alive'
   description: string
+  image: MulterFile
 }
 
 const createAuthor = async (database: Db, data: AuthorData) => {
   const authorsCollection = database.collection<Author>('authors')
-
+  const { image, ...rest } = data
   let dateOfDeath = ''
+  let location: { Location: string; Key: string } | null = null
+
+  if (image) {
+    const { Location, Key } = await uploadFile(image)
+    location = { Location, Key }
+  }
 
   if (!data.dateOfDeath) {
     dateOfDeath = 'Alive'
@@ -38,7 +54,11 @@ const createAuthor = async (database: Db, data: AuthorData) => {
     dateOfDeath = data.dateOfDeath
   }
 
-  const newAuthor = await authorsCollection.insertOne({ ...data, dateOfDeath })
+  const newAuthor = await authorsCollection.insertOne({
+    ...rest,
+    dateOfDeath,
+    image: location,
+  })
 
   return newAuthor
 }

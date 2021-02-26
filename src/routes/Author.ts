@@ -3,17 +3,22 @@ import {
   getAuthors as getMany,
   getAuthorById as getOne,
   deleteAuthor as deleteOne,
+  MulterFile,
 } from '@db'
 import { IRequest } from '@middleware'
 import { NextApiResponse } from 'next'
 
-export class AuthorControler {
-  static async createAuthor(req: IRequest, res: NextApiResponse) {
-    const authorData = req.body
+interface IReqestWithFile extends IRequest {
+  file: MulterFile
+}
 
+export class AuthorControler {
+  static async createAuthor(req: IReqestWithFile, res: NextApiResponse) {
+    const authorData = req.body
+    const image = req.file
     const db = req.db
 
-    const newAuthor = await create(db, authorData)
+    const newAuthor = await create(db, { ...authorData, image })
 
     res.status(201).json({ author: { ...newAuthor.ops[0] } })
   }

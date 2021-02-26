@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import {
   Box,
   Input,
@@ -9,6 +9,7 @@ import {
 } from '@chakra-ui/react'
 import { Formik, Form, Field } from 'formik'
 import { AuthorData } from '@db'
+import FileInput from './FileInput'
 
 const initalValues = {
   name: '',
@@ -18,15 +19,19 @@ const initalValues = {
   description: '',
 }
 interface Props {
-  handleSubmit: (data: AuthorData) => Promise<void>
+  handleSubmit: (data: AuthorData, image: File) => Promise<void>
 }
 
 const AuthorForm: React.FC<Props> = ({ handleSubmit }): JSX.Element => {
+  const [image, setImage] = useState<File>(null)
+
   return (
     <Box>
       <Formik
         initialValues={initalValues}
-        onSubmit={(values) => handleSubmit(values)}
+        onSubmit={(values) => {
+          handleSubmit(values, image)
+        }}
       >
         {(formik) => (
           <Form>
@@ -67,6 +72,10 @@ const AuthorForm: React.FC<Props> = ({ handleSubmit }): JSX.Element => {
                 placeholder="Description"
               />
             </FormControl>
+            <FileInput
+              setImage={(image: File) => setImage(image)}
+              cta="Add author image"
+            />
             <Button mr={3} type="submit">
               Create
             </Button>

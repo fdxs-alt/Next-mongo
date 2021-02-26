@@ -1,12 +1,11 @@
 import React from 'react'
 import { AuthorWithID } from '@db'
 interface Props {
-  id: string
   author: AuthorWithID
 }
 
-const About: React.FC<Props> = ({ id }): JSX.Element => {
-  return <div>{id}</div>
+const About: React.FC<Props> = ({ author }): JSX.Element => {
+  return <div>{JSON.stringify(author)}</div>
 }
 
 export default About

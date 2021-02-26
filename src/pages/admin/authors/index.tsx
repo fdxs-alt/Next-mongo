@@ -12,19 +12,27 @@ import { getServerSidePropsWithSession } from 'types'
 const Authors = () => {
   const [page, setPage] = useState(0)
   const { data, mutate } = useSWR<{ authors: AuthorWithID[] }>(
-    `/api/admin/authors/${page}`
+    `/api/parser/admin/authors/${page}`
   )
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const handleSubmit = useCallback(
-    async (newAuthor: AuthorDataType) => {
+    async (newAuthor: AuthorDataType, image: File) => {
+      const { dateOfBirth, dateOfDeath, description, name, surname } = newAuthor
+
+      const authorData = new FormData()
+      authorData.append('name', name)
+      authorData.append('surname', surname)
+      authorData.append('dateOfDeath', dateOfDeath)
+      authorData.append('dateOfBirth', dateOfBirth)
+      authorData.append('description', description)
+      authorData.append('image', image)
+
       try {
-        const { data: author } = await post<
-          AuthorDataType,
-          { author: AuthorWithID }
-        >('/api/admin/author/create', {
-          ...newAuthor,
-        })
+        const { data: author } = await post<FormData, { author: AuthorWithID }>(
+          '/api/files/admin/author/create',
+          authorData
+        )
         const newData = [...data.authors, author.author]
         mutate({ ...data, authors: newData })
       } catch (error) {
@@ -37,7 +45,7 @@ const Authors = () => {
   const deleteAuthor = useCallback(
     async (id: string) => {
       try {
-        await del(`/api/admin/author/${id}`)
+        await del(`/api/parser/admin/author/${id}`)
         const newData = data.authors.filter((el) => el._id !== id)
 
         mutate({ ...data, authors: newData })

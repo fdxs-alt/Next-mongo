@@ -12,6 +12,7 @@ import {
 import { NextApiResponse } from 'next'
 import nc from 'next-connect'
 import cors from 'cors'
+
 const handler = nc<IRequest, NextApiResponse>({
   onError: errorHandler,
   attachParams: true,
@@ -20,54 +21,44 @@ const handler = nc<IRequest, NextApiResponse>({
   .use(common)
   .use(cors({ credentials: true, origin: 'http://localhost:3000' }))
   // AUTH
-  .get('/api/auth/me', asyncHandler(AuthController.me))
-  .post('/api/auth/login', asyncHandler(AuthController.login))
-  .post('/api/auth/register', asyncHandler(AuthController.register))
-  .post('/api/auth/logout', asyncHandler(AuthController.logout))
+  .get('/api/parser/auth/me', asyncHandler(AuthController.me))
+  .post('/api/parser/auth/login', asyncHandler(AuthController.login))
+  .post('/api/parser/auth/register', asyncHandler(AuthController.register))
+  .post('/api/parser/auth/logout', asyncHandler(AuthController.logout))
   // AUTHOR
   .get(
-    '/api/admin/authors/:page',
+    '/api/parser/admin/authors/:page',
     authMiddleware,
     asyncHandler(AuthorControler.getAuthors)
   )
   .get(
-    '/api/admin/author/:authorId',
+    '/api/parser/admin/author/:authorId',
     authMiddleware,
     asyncHandler(AuthorControler.getAuthor)
   )
-  .post(
-    '/api/admin/author/create',
-    adminAuthMiddleware,
-    asyncHandler(AuthorControler.createAuthor)
-  )
   .delete(
-    '/api/admin/author/:authorId',
+    '/api/parser/admin/author/:authorId',
     adminAuthMiddleware,
     asyncHandler(AuthorControler.deleteAuthor)
   )
   // BOOK
   .get(
-    '/api/admin/book/:bookId',
+    '/api/parser/admin/book/:bookId',
     authMiddleware,
     asyncHandler(BookController.getBook)
   )
   .get(
-    '/api/admin/books/:page',
+    '/api/parser/admin/books/:page',
     authMiddleware,
     asyncHandler(BookController.getBooks)
   )
   .get(
-    '/api/admin/book/author/:authorId',
+    '/api/parser/admin/book/author/:authorId',
     authMiddleware,
     asyncHandler(BookController.getByAuthor)
   )
-  .post(
-    '/api/admin/book/create',
-    adminAuthMiddleware,
-    asyncHandler(BookController.createBook)
-  )
   .delete(
-    '/api/admin/book/:bookId',
+    '/api/parser/admin/book/:bookId',
     adminAuthMiddleware,
     asyncHandler(BookController.deleteBook)
   )

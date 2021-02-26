@@ -35,7 +35,7 @@ interface CtxProps {
 const AuthCtx = createContext<CtxProps>({} as CtxProps)
 
 const AuthCtxProvider: React.FC<Props> = ({ children }) => {
-  const { data: user, mutate } = useSWR<User | null>('/api/auth/me')
+  const { data: user, mutate } = useSWR<User | null>('/api/parser/auth/me')
   const toast = useToast()
   const { push: pushState } = useRouter()
 
@@ -59,7 +59,10 @@ const AuthCtxProvider: React.FC<Props> = ({ children }) => {
       try {
         const {
           data: { user },
-        } = await post<LoginValues, { user: User }>('/api/auth/login', values)
+        } = await post<LoginValues, { user: User }>(
+          '/api/parser/auth/login',
+          values
+        )
         mutate({ ...user })
       } catch (error) {
         createErrorToast(error.response.data.message)
@@ -74,7 +77,7 @@ const AuthCtxProvider: React.FC<Props> = ({ children }) => {
         const {
           data: { user },
         } = await post<RegisterValues, { user: User }>(
-          '/api/auth/register',
+          '/api/parser/auth/register',
           values
         )
         mutate({ ...user })
@@ -87,7 +90,7 @@ const AuthCtxProvider: React.FC<Props> = ({ children }) => {
 
   const logout = useCallback(async () => {
     try {
-      await post('/api/auth/logout', null)
+      await post('/api/parser/auth/logout', null)
       mutate(null)
     } catch (error) {
       createErrorToast(error.response.data.message)
