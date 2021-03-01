@@ -36,6 +36,11 @@ const handler = nc<IRequest, NextApiResponse>({
     authMiddleware,
     asyncHandler(AuthorControler.getAuthor)
   )
+  .patch(
+    '/api/parser/admin/author/:authorId',
+    adminAuthMiddleware,
+    asyncHandler(AuthorControler.update)
+  )
   .delete(
     '/api/parser/admin/author/:authorId',
     adminAuthMiddleware,

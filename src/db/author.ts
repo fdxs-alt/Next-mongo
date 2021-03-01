@@ -9,19 +9,20 @@ export interface MulterFile {
   buffer: Buffer
   size: number
 }
+interface UpdateAuthor {
+  name: string
+  surname: string
+  dateOfBirth: string
+  dateOfDeath?: string | 'Alive'
+  description: string
+}
 export interface Author {
   name: string
   surname: string
   dateOfBirth: string
   dateOfDeath?: string | 'Alive'
   description: string
-  books?: ObjectID[]
   image?: { Location: string; Key: string }
-}
-
-interface Book {
-  id: string
-  title: string
 }
 
 export interface AuthorWithID extends Author {
@@ -72,31 +73,19 @@ const deleteAuthor = async (database: Db, id: string) => {
 
   return deletedAuthor
 }
-const addBookToAuthor = async (db: Db, book: Book, id: string) => {
+
+const updateAuthorData = async (db: Db, id: string, author: UpdateAuthor) => {
   const authorsCollection = db.collection<Author>('authors')
-  const updatedAuthor = await authorsCollection.findOneAndUpdate(
+
+  const updatedAuthor = await authorsCollection.updateOne(
     {
       _id: new ObjectID(id),
     },
-    { $push: { books: new ObjectID(book.id) } }
+    { $set: { ...author } }
   )
 
   return updatedAuthor
 }
-
-const removeBookFromAuthor = async (db: Db, id: ObjectID, bookID: ObjectID) => {
-  const authorsCollection = db.collection<Author>('authors')
-
-  const updatedAuthor = await authorsCollection.findOneAndUpdate(
-    {
-      _id: new ObjectID(id),
-    },
-    { $pull: { books: new ObjectID(bookID) } }
-  )
-
-  return updatedAuthor
-}
-const updateAuthorData = async (db: Db) => {}
 const getAuthorById = async (db: Db, id: string) => {
   const authorsCollection = db.collection<Author>('authors')
 
@@ -120,8 +109,6 @@ const getAuthors = async (db: Db, page: number) => {
 export {
   createAuthor,
   deleteAuthor,
-  addBookToAuthor,
-  removeBookFromAuthor,
   updateAuthorData,
   getAuthorById,
   getAuthors,

@@ -8,12 +8,10 @@ import {
 } from './user'
 import { createCheckout, prolongCheckout, removeCheckout } from './checkout'
 import {
-  addBookToAuthor,
   createAuthor,
   deleteAuthor,
   getAuthorById,
   getAuthors,
-  removeBookFromAuthor,
   updateAuthorData,
   AuthorData,
   Author,
@@ -42,12 +40,10 @@ export {
   createCheckout,
   prolongCheckout,
   removeCheckout,
-  addBookToAuthor,
   createAuthor,
   deleteAuthor,
   getAuthorById,
   getAuthors,
-  removeBookFromAuthor,
   updateAuthorData,
   createBook,
   deleteBook,

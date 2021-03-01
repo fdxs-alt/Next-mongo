@@ -13,6 +13,14 @@ const post = <T, K>(
   return Axios.post(url, body, config)
 }
 
+const patch = <T, K>(
+  url: string,
+  body?: T,
+  config?: AxiosRequestConfig
+): Promise<AxiosResponse<K>> => {
+  return Axios.patch(url, body, config)
+}
+
 const get = <K>(
   url: string,
   config?: AxiosRequestConfig
@@ -29,4 +37,4 @@ const del = <K>(
 
 const fetcher = <T>(url: string) => Axios.get(url).then((res) => res.data as T)
 
-export { fetcher, post, get, del }
+export { fetcher, post, get, del, patch }

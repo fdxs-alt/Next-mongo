@@ -4,6 +4,7 @@ import {
   getAuthorById as getOne,
   deleteAuthor as deleteOne,
   MulterFile,
+  updateAuthorData,
 } from '@db'
 import { IRequest } from '@middleware'
 import { NextApiResponse } from 'next'
@@ -37,6 +38,16 @@ export class AuthorControler {
     const db = req.db
 
     const author = await getOne(db, authorId)
+
+    res.status(200).json({ author })
+  }
+
+  static async update(req: IRequest, res: NextApiResponse) {
+    const { authorId } = req.params
+    const updateData = req.body
+    const db = req.db
+
+    const author = await updateAuthorData(db, authorId, updateData)
 
     res.status(200).json({ author })
   }
